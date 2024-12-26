@@ -7,29 +7,16 @@ global:
   evaluation_interval: 15s
 
 scrape_configs:
-- job_name: prometheus
-  # 是否尊重目标的时间戳
-  honor_timestamps: true
-  # 抓取间隔时间
-  scrape_interval: 15s
-  # 抓取超时时间
-  scrape_timeout: 10s
-  # 抓取指标的路径
-  metrics_path: /metrics
-  # 使用的协议
-  scheme: http
-  static_configs:
-  - targets:
-    # 目标地址
-    - localhost:9090
-
-alerting:
-  alertmanagers:
-  - static_configs:
-    - targets: []
-    # 使用的协议
-    scheme: http
-    # 超时时间
-    timeout: 10s
-    # API 版本
-    api_version: v2
+  - job_name: prometheus
+    static_configs:
+      - targets:
+        # 抓取指标的目标地址
+        - localhost:9090
+  - job_name: telegraf
+    static_configs:
+      - targets:
+        - telegraf:9273
+  - job_name: grafana
+    static_configs:
+      - targets:
+        - grafana:3000        
